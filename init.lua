@@ -158,9 +158,17 @@ vim.opt.wrap = false
 
 vim.opt.colorcolumn = '80'
 
-vim.opt.smartindent = false
-vim.opt.autoindent = true
-vim.opt.indentexpr = ''
+-- vim.opt.smartindent = false
+-- vim.opt.autoindent = false
+-- vim.opt.indentexpr = ''
+-- vim.cmd("filetype indent off")
+vim.api.nvim_create_autocmd("FileType", {
+    callback = function()
+        vim.opt_local.indentexpr = ""
+        vim.opt_local.autoindent = true
+        vim.opt_local.smartindent = false
+    end,
+})
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -586,7 +594,7 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
-        tsserver = {},
+        -- tsserver = {},
         --
 
         lua_ls = {
@@ -852,7 +860,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc', 'go' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -862,7 +870,7 @@ require('lazy').setup({
         --  the list of additional_vim_regex_highlighting and disabled languages for indent.
         additional_vim_regex_highlighting = { 'ruby' },
       },
-      indent = { enable = true, disable = { 'ruby' } },
+      indent = { enable = false },
     },
     config = function(_, opts)
       -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
